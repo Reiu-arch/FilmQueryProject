@@ -20,7 +20,11 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	public Film findFilmById(int filmId) {
 	    Film film = null;
 
-	    String sqlText = "SELECT id, title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features FROM film WHERE id = ?";
+	    String sqlText = "SELECT film.id, title, description, release_year, rental_duration, rental_rate, length, replacement_cost, rating, special_features, "
+	    		+ "language.name AS language_name "
+	    		+ "FROM film "
+	    		+ "JOIN language ON film.language_id = language.id "
+	    		+ "WHERE film.id = ?";
 
 	    try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
 	         PreparedStatement stmt = conn.prepareStatement(sqlText)) {
@@ -36,7 +40,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	            film.setTitle(rs.getString("title"));
 	            film.setDescription(rs.getString("description"));
 	            film.setReleaseYear(rs.getInt("release_year"));
-	            film.setLanguageId(rs.getInt("language_id"));
+	            film.setLanguage(rs.getString("language_name"));
 	            film.setRentalDuration(rs.getInt("rental_duration"));
 	            film.setRentalRate(rs.getDouble("rental_rate"));
 	            film.setRentalLength(rs.getInt("length"));
@@ -119,7 +123,11 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		Film film = null;
 		List<Film> films = new ArrayList<>();
 		wordle = "%" + wordle + "%";
-		String sqlText = "SELECT id, title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features FROM film WHERE title LIKE ? OR description LIKE ?";
+		String sqlText = "SELECT film.id, title, description, release_year, rental_duration, rental_rate, length, replacement_cost, rating, special_features,"
+				+ "language.name AS language_name "
+				+ "FROM film "
+				+ "JOIN language ON film.language_id = language.id "
+				+ "WHERE title LIKE ? OR description LIKE ?";
 		try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
 				PreparedStatement stmt = conn.prepareStatement(sqlText)) {
 			stmt.setString(1, wordle);
@@ -135,7 +143,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	            film.setTitle(rs.getString("title"));
 	            film.setDescription(rs.getString("description"));
 	            film.setReleaseYear(rs.getInt("release_year"));
-	            film.setLanguageId(rs.getInt("language_id"));
+	            film.setLanguage(rs.getString("language_name"));
 	            film.setRentalDuration(rs.getInt("rental_duration"));
 	            film.setRentalRate(rs.getDouble("rental_rate"));
 	            film.setRentalLength(rs.getInt("length"));
