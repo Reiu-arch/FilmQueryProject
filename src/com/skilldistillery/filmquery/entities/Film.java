@@ -150,10 +150,10 @@ public class Film {
 	}
 	@Override
 	public String toString() {
-		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", releaseYear=" + releaseYear
-				+ ", languageId=" + languageId + ", rentalDuration=" + rentalDuration + ", rentalRate=" + rentalRate
-				+ ", rentalLength=" + rentalLength + ", replacementCost=" + replacementCost + ", rating=" + rating
-				+ ", specialFeatures=" + specialFeatures + ", actor=" + actor + "]";
+		return "Film ID         = " + id + "\nTitle           = " + title + "\nDescription     = " + description + "\nReleaseYear     = " + releaseYear
+				+ "\nLanguageId      = " + languageId + "\nRental Duration = " + rentalDuration + "\nRental Rate     = " + rentalRate
+				+ "\nRental Length   = " + rentalLength + "\nReplacement Cost= " + replacementCost + "\nRating          = " + rating
+				+ "\nSpecial Features= " + specialFeatures + "\n\n Actors:" + actor;
 	}
 	public Film() {
 		super();
