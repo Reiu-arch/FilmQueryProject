@@ -37,15 +37,18 @@ public class FilmQueryApp {
 					try {
 					System.out.println(
 							"We have 1000 films in our collection! Pick a number between 1-1000 to see each ones information!");
+					System.out.println();
 					String filmChoice = sc.nextLine();
 					int option = Integer.valueOf(filmChoice);
 
 					if (option > 1000) {
 						System.err.println("Please choose an appropriate film number");
+						System.out.println();
 						break;
 					}
 					if (option < 0) {
 						System.err.println("Please choose an appropriate film number");
+						System.out.println();
 						break;
 					} else {
 
@@ -69,6 +72,7 @@ public class FilmQueryApp {
 				case 2:
 					try {
 						System.out.println("Enter in a word you would like to search our database with! :");
+						System.out.println();
 						String filmString = sc.nextLine();
 						
 
@@ -113,8 +117,9 @@ public class FilmQueryApp {
 				}
 
 			}
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
+		} catch (NumberFormatException nfe) {
+			System.out.println("Invalid input.\n");
+			sc.nextLine();
 		}
 		sc.close();
 	}
