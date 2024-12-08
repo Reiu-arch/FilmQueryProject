@@ -28,6 +28,7 @@ public class FilmQueryApp {
 				displayUserMenu();
 				seperator();
 				System.out.println("Please choose an option from the Menu: ");
+				System.out.println();
 				String input = sc.nextLine();
 
 				int i = Integer.valueOf(input);
@@ -53,7 +54,7 @@ public class FilmQueryApp {
 						System.out.println("\n");
 						System.out.println("| Film        : " + film.getTitle() + "\n|------------------------------------------------------\n| Release Year: "
 								+ film.getReleaseYear() + "\n|------------------------------------------------------\n| Rated       : " + film.getRating() + "\n|------------------------------------------------------\n| Description : "
-								+ film.getDescription());
+								+ film.getDescription()+ "\n|------------------------------------------------------\n| Actors      : " + film.getActor());
 						System.out.println("\n");
 						seperator();
 						break;
@@ -80,7 +81,7 @@ public class FilmQueryApp {
 							System.out.println("\n");
 							System.out.println("| Film        : " + filmz.getTitle() + "\n|------------------------------------------------------\n| Release Year: "
 									+ filmz.getReleaseYear() + "\n|------------------------------------------------------\n| Rated       : " + filmz.getRating() + "\n|------------------------------------------------------\n| Description : "
-									+ filmz.getDescription());
+									+ filmz.getDescription()+ "\n|------------------------------------------------------\n| Actors      : " + filmz.getActor());
 							System.out.println("\n");
 							seperator();
 							}
