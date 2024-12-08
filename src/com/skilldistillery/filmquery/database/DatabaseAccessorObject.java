@@ -20,9 +20,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	public Film findFilmById(int filmId) {
 	    Film film = null;
 
-	    String sqlText = "SELECT id, title, description, release_year, language_id, " +
-	                     "rental_duration, rental_rate, length, replacement_cost, rating, special_features " +
-	                     "FROM film WHERE id = ?";
+	    String sqlText = "SELECT id, title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features FROM film WHERE id = ?";
 
 	    try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
 	         PreparedStatement stmt = conn.prepareStatement(sqlText)) {
@@ -113,5 +111,45 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 
 		return actors;
+	}
+
+
+	@Override
+	public List<Film> findFilmByKeyword(String wordle) {
+		Film film = null;
+		List<Film> films = new ArrayList<>();
+		wordle = "%" + wordle + "%";
+		String sqlText = "SELECT id, title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features FROM film WHERE title LIKE ? OR description LIKE ?";
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+				PreparedStatement stmt = conn.prepareStatement(sqlText)) {
+			stmt.setString(1, wordle);
+			stmt.setString(2, wordle);
+
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				film = new Film();
+
+	            // Using column names for better readability
+	            film.setId(rs.getInt("id"));
+	            film.setTitle(rs.getString("title"));
+	            film.setDescription(rs.getString("description"));
+	            film.setReleaseYear(rs.getInt("release_year"));
+	            film.setLanguageId(rs.getInt("language_id"));
+	            film.setRentalDuration(rs.getInt("rental_duration"));
+	            film.setRentalRate(rs.getDouble("rental_rate"));
+	            film.setRentalLength(rs.getInt("length"));
+	            film.setReplacementCost(rs.getDouble("replacement_cost"));
+	            film.setRating(rs.getString("rating"));
+	            film.setSpecialFeatures(rs.getString("special_features"));
+	            films.add(film);
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return films;
 	}
 }

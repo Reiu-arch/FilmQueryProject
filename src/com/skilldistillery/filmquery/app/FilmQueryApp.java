@@ -1,6 +1,7 @@
 package com.skilldistillery.filmquery.app;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import com.skilldistillery.filmquery.database.DatabaseAccessor;
@@ -17,7 +18,7 @@ public class FilmQueryApp {
 		app.launch();
 	}
 
-	@SuppressWarnings("resource")
+	
 	private void launch() {
 		Scanner sc = new Scanner(System.in);
 
@@ -67,43 +68,52 @@ public class FilmQueryApp {
 				case 2:
 					try {
 						System.out.println("Enter in a word you would like to search our database with! :");
-						String filmChoice = sc.nextLine();
-						int option = Integer.valueOf(filmChoice);
+						String filmString = sc.nextLine();
+						
 
-						if (option > 1000) {
-							System.err.println("Please choose an appropriate film number");
-							break;
-						}
-						if (option < 0) {
-							System.err.println("Please choose an appropriate film number");
-							break;
-						} else {
-
-							Film film = db.findFilmById(option);
+						
+							List<Film> film = db.findFilmByKeyword(filmString);
+							seperator();
+							for (Film filmz : film) {
+								
 							seperator();
 							System.out.println("\n");
-							System.out.println("| Film        : " + film.getTitle() + "\n|------------------------------------------------------\n| Release Year: "
-									+ film.getReleaseYear() + "\n|------------------------------------------------------\n| Rated       : " + film.getRating() + "\n|------------------------------------------------------\n| Description : "
-									+ film.getDescription());
+							System.out.println("| Film        : " + filmz.getTitle() + "\n|------------------------------------------------------\n| Release Year: "
+									+ filmz.getReleaseYear() + "\n|------------------------------------------------------\n| Rated       : " + filmz.getRating() + "\n|------------------------------------------------------\n| Description : "
+									+ filmz.getDescription());
 							System.out.println("\n");
 							seperator();
+							}
 							break;
 						}
-						}
+						
 							catch (InputMismatchException ime) {
 								System.out.println("Invalid input.\n");
 								sc.nextLine();
-
 							}
 				case 3:
 					
+					seperator();
+					seperator();
+					System.out.println("▓▓▓▓▓▓ ▓▓▓▓▓▓▓ ▓▓▓▓▓▓▓ ▓▓▓▓▓▓     ▓▓▓▓▓   ▓▓    ▓▓  ▓▓▓▓▓\n"
+							         + "▓▓     ▓▓   ▓▓ ▓▓   ▓▓ ▓▓   ▓▓    ▓▓  ▓▓   ▓▓  ▓▓   ▓▓   \n"
+							         + "▓▓  ▓▓ ▓▓   ▓▓ ▓▓   ▓▓ ▓▓    ▓▓   ▓▓▓▓▓▓▓   ▓▓▓▓    ▓▓▓▓ \n"
+							         + "▓▓   ▓ ▓▓   ▓▓ ▓▓   ▓▓ ▓▓   ▓▓    ▓▓  ▓▓     ▓▓     ▓▓   \n"
+							         + "▓▓▓▓▓▓ ▓▓▓▓▓▓▓ ▓▓▓▓▓▓▓ ▓▓▓▓▓▓     ▓▓▓▓▓▓     ▓▓     ▓▓▓▓▓\n"
+							         + "");
+					seperator();
+					seperator();
+					
+					keepGoing = false;
+					break;
 					default:
+						System.err.println("Please enter in a valid option!");
+						return;
 				}
 
 			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			return;
 		}
 		sc.close();
 	}
